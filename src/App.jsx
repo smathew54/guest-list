@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import useGuests from "./guests/useGuests";
 
+
 const API_URL =
   "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2505-ftb-ct-web-pt/guests";
 
@@ -31,9 +32,9 @@ export default function App() {
         <h4>{individualGuest.name}</h4>
         <h5>Contact Info</h5>
         <p>
-          Phone Number:{individualGuest.phone} Email Address:{individualGuest.email}.
+          Phone Number: {individualGuest.phone} Email Address:  {individualGuest.email}.
         </p>
-        <address>{individualGuest.email}</address>
+        <p>Guest Number: {individualGuest.id}</p>
         <p>{individualGuest.bio}</p>
         <button onClick={() => setIndividualGuest(null)}>Go Back</button>
         </section>
