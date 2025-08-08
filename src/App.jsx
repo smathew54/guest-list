@@ -22,7 +22,7 @@ export default function App() {
       return (
         <section className="details">
           <h4>Guest Details</h4>
-          <p>Select a guest to learn more.</p>
+          <p>Select a guest to see more details.</p>
         </section>
       );
     }
@@ -44,7 +44,9 @@ export default function App() {
   return (
     <>
       <header>
+        <div className="title">
         <h1>Guest List</h1>
+        </div>
       </header>
       <main>
         <div className="styleTable">
