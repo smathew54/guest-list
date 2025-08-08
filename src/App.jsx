@@ -1,15 +1,44 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import GetGuests from "./guests/GetGuests";
+import useGuests from "./guests/useGuests";
 
 const API_URL =
   "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2505-ftb-ct-web-pt/guests";
 
 export default function App() {
-  const [selectedGuest, setSelectedGuest] = useState([]);
+  const { selectedGuest, loading, error } = useGuests(API_URL);
+  const [individualGuest, setIndividualGuest] = useState();
+  console.log("I'm returning the guest list");
+  console.log({ selectedGuest });
 
-  const { guestList, loading, error } = GetGuests(API_URL);
+  const clickedGuest = (guest) => {
+    console.log("selected guest:", guest.name);
+    setIndividualGuest(guest)
+  };
 
+  function IndividualGuest() {
+    if (!individualGuest) {
+      return (
+        <section className="details">
+          <h4>Guest Details</h4>
+          <p>Select a guest to learn more.</p>
+        </section>
+      );
+    }
+
+    return (
+      <section className="details">
+        <h4>{individualGuest.name}</h4>
+        <h5>Contact Info</h5>
+        <p>
+          Phone Number:{individualGuest.phone} Email Address:{individualGuest.email}.
+        </p>
+        <address>{individualGuest.email}</address>
+        <p>{individualGuest.bio}</p>
+        <button onClick={() => setIndividualGuest(null)}>Go Back</button>
+        </section>
+    );
+  }
   //this is to render the HTML
   return (
     <>
@@ -22,19 +51,25 @@ export default function App() {
           <table className="innerTable">
             <thead>
               <tr>
-                <th scope="col">id</th>
                 <th scope="col">name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Phone</th>
               </tr>
             </thead>
             <tbody>
-              {/* {guestList.map =((element) => (console.log(element)))}
-              <td></td> */}
+              {selectedGuest.map((guest) => {
+                return (
+                  <tr key={guest.id} onClick={() =>clickedGuest(guest)}>
+                    <td>{guest.name}</td>
+                    <td>{guest.email}</td>
+                    <td>{guest.phone}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
+          <IndividualGuest/>
         </div>
-        <div></div>
       </main>
     </>
   );
